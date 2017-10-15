@@ -1,0 +1,3 @@
+rootProject.name = 'cv4j-desktop'
+include 'desktop'
+
