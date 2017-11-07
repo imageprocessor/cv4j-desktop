@@ -15,6 +15,7 @@
  */
 package com.cv4j.image.util;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.Arrays;
@@ -94,6 +95,17 @@ public class Tools {
 
     public static int clamp(int x, int a, int b) {
         return (x < a) ? a : (x > b) ? b : x;
+    }
+    
+    public static void setRGB(int width, int height, int[] pixels, byte[] R, byte[] G, byte[] B) {
+		for (int i=0; i < width*height; i++)
+			pixels[i] = 0xff000000 | ((R[i]&0xff)<<16) | ((G[i]&0xff)<<8) | B[i]&0xff;
+	}
+    
+    public static BufferedImage toImage(int[] pixels, int width, int height) {
+    	BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    	bi.setRGB(0, 0, width, height, pixels, 0, width);
+    	return bi;
     }
 
     /**
