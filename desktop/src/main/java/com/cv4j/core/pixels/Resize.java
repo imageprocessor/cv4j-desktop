@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2017 - present, CV4J Contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.cv4j.core.pixels;
 
 import com.cv4j.core.datamodel.ByteProcessor;
@@ -6,6 +21,7 @@ import com.cv4j.core.datamodel.ImageProcessor;
 import com.cv4j.image.util.Tools;
 
 public class Resize {
+
 	public final static int NEAREST_INTEPOLATE = 1;
 	public final static int BILINE_INTEPOLATE = 2;
 	private float xrate;
@@ -100,24 +116,30 @@ public class Resize {
 	}
 	
     private int[] getPixel(double j, double k, int width, int height, ImageProcessor processor) {
+
     	int row = (int)j;
     	int col = (int)k;
+
     	if(row >= height)
     	{
     		row = height - 1;
     	}
+
     	if(row < 0)
     	{
     		row = 0;
     	}
+
     	if(col < 0)
     	{
     		col = 0;
     	}
+
     	if(col >= width)
     	{
     		col = width - 1;
     	}
+
     	int index = row * width + col;
     	int channels = processor.getChannels();
     	int[] rgb = new int[channels];

@@ -1,9 +1,25 @@
+/*
+ * Copyright (c) 2017-present, CV4J Contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.cv4j.core.pixels;
 
 import com.cv4j.core.datamodel.ByteProcessor;
 import com.cv4j.core.datamodel.ColorProcessor;
 import com.cv4j.core.datamodel.ImageProcessor;
 import com.cv4j.core.datamodel.Rect;
+import com.cv4j.exception.CV4JException;
 import com.cv4j.image.util.Preconditions;
 import com.cv4j.image.util.Tools;
 
@@ -200,33 +216,39 @@ public final class Operator {
 		}
 		return dst;
 	}
-	
+
 	/**
 	 * ROI sub image by rect.x, rect.y, rect.width, rect.height
 	 * @param image
 	 * @param rect
 	 * @return
+	 * @throws CV4JException
 	 */
-	public static ImageProcessor subImage(ImageProcessor image, Rect rect) {
+	public static ImageProcessor subImage(ImageProcessor image, Rect rect) throws CV4JException{
 		int channels = image.getChannels();
 		int w = rect.width;
 		int h = rect.height;
 		ImageProcessor dst = (channels == 3) ? new ColorProcessor(w, h) : new ByteProcessor(w, h);
 		int a=0;
 		int index = 0;
-		for(int n=0; n<channels; n++) {
-			for(int row=rect.y; row < (rect.y+rect.height); row++) {
-				for(int col=rect.x; col < (rect.x+rect.width); col++) {
-					index = row*image.getWidth() + col;
-					a = image.toByte(n)[index]&0xff;
-					index = (row - rect.y)*w + (col - rect.x);
-					dst.toByte(n)[index] = (byte)a;
+
+		try {
+			for(int n=0; n<channels; n++) {
+				for(int row=rect.y; row < (rect.y+rect.height); row++) {
+					for(int col=rect.x; col < (rect.x+rect.width); col++) {
+						index = row*image.getWidth() + col;
+						a = image.toByte(n)[index]&0xff;
+						index = (row - rect.y)*w + (col - rect.x);
+						dst.toByte(n)[index] = (byte)a;
+					}
 				}
 			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new CV4JException("数组越界了");
 		}
+
 		return dst;
 	}
-
 
 	private static boolean checkParams(ImageProcessor src1, ImageProcessor src2) {
 
