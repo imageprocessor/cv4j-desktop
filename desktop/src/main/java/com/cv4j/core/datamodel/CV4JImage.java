@@ -125,6 +125,7 @@ public class CV4JImage implements ImageData, Serializable{
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         int[] input = new int[width * height];
+		this.bitmap = null;
         getRGB(bitmap, 0, 0, width, height, input);
         processor = new ColorProcessor(input,width, height);
         ((ColorProcessor)processor).setCallBack(this);
