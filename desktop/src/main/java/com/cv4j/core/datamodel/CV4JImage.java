@@ -34,6 +34,21 @@ public class CV4JImage implements ImageData, Serializable{
     private int height;
     private ImageProcessor processor;
     private BufferedImage bitmap;
+    
+    public CV4JImage(ImageProcessor processor) {
+    	if(processor == null) {
+            throw new CV4JException("processor is null");
+        }
+
+        width = processor.getWidth();
+        height = processor.getHeight();
+        this.processor = processor;
+        if(processor instanceof ColorProcessor) {
+        	((ColorProcessor)processor).setCallBack(this);
+        } else {
+        	((ByteProcessor)processor).setCallBack(this);
+        }
+    }
 
     public CV4JImage(BufferedImage bitmap) {
         if (bitmap == null) {
@@ -125,7 +140,6 @@ public class CV4JImage implements ImageData, Serializable{
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         int[] input = new int[width * height];
-		this.bitmap = null;
         getRGB(bitmap, 0, 0, width, height, input);
         processor = new ColorProcessor(input,width, height);
         ((ColorProcessor)processor).setCallBack(this);
