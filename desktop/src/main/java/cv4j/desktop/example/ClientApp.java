@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.cv4j.core.datamodel.CV4JImage;
-import com.cv4j.core.filters.ColorFilter;
+import com.cv4j.core.datamodel.ImageProcessor;
+import com.cv4j.core.datamodel.Scalar;
+import com.cv4j.core.pixels.NormRotate;
 
 
 public class ClientApp extends JFrame implements ActionListener {
@@ -65,13 +68,19 @@ public class ClientApp extends JFrame implements ActionListener {
 				BufferedImage image = ImageIO.read(f);
 				imagepanel.setImage(image);
 			} else if(e.getSource() == okBtn){
-				ColorFilter filter = new ColorFilter();
 				CV4JImage model = new CV4JImage(imagepanel.getImage());
-				filter.filter(model.getProcessor());
-				imagepanel.setImage(model.toBitmap());
+				NormRotate rtt = new NormRotate();
+				ImageProcessor processor = rtt.rotate(model.getProcessor(), 45, new Scalar(0, 0, 255));
+				CV4JImage result = new CV4JImage(processor);
+		    	File newImgFile = new File("D:\\kkkkk.jpg");
+		    	FileOutputStream fos = new FileOutputStream(newImgFile);
+		    	BufferedImage temp = result.toBitmap();
+				ImageIO.write(temp, "jpg",fos);
+				fos.close();
+				imagepanel.setImage(temp);
 			}
 		}catch(IOException ioe) {
-			
+			ioe.printStackTrace();
 		}
 		
 	}
@@ -94,8 +103,7 @@ public class ClientApp extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		try {
-			String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-			UIManager.setLookAndFeel(lookAndFeel);
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			ClientApp ui = new ClientApp();
 			ui.showUI();
 		} catch (ClassNotFoundException e) {
