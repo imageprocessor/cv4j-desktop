@@ -39,7 +39,6 @@ public class CV4JImage implements ImageData, Serializable{
         if (bitmap == null) {
             throw new CV4JException("bitmap is null");
         }
-        this.bitmap = bitmap;
         width = bitmap.getWidth();
         height = bitmap.getHeight();
         int[] input = new int[width * height];
@@ -113,6 +112,9 @@ public class CV4JImage implements ImageData, Serializable{
     @Override
     public BufferedImage toBitmap() {
     	int[] pixels = new int[width * height];
+    	if(bitmap == null) { // suitable with JPG/PNG
+    		bitmap = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    	}
     	setRGB(width, height, pixels, processor.toByte(0), processor.toByte(1), processor.toByte(2));
     	setRGB(bitmap, 0, 0, width, height, pixels );
     	return bitmap;
