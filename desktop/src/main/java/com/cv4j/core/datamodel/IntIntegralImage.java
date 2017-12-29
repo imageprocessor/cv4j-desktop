@@ -15,22 +15,21 @@
  */
 package com.cv4j.core.datamodel;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class IntIntegralImage {
 	// sum index tables
 	private int[] sum;
 	// image
 	private float[] squaresum;
+
+	@Getter
+	@Setter
 	private byte[] image;
+
 	private int width;
 	private int height;
-
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
 
 	public int getBlockSum2(int ney, int nex, int swy, int swx) {
 		int sum1, sum2, sum3, sum4;
