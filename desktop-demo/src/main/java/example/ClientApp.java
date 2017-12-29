@@ -93,7 +93,8 @@ public class ClientApp extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+			// 适配当前平台
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			ClientApp ui = new ClientApp();
 			ui.showUI();
 		} catch (ClassNotFoundException e) {
