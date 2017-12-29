@@ -1,29 +1,19 @@
-package cv4j.desktop.example;
+package example;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-import java.awt.Window;
+import com.cv4j.core.datamodel.CV4JImage;
+import com.cv4j.core.datamodel.ImageProcessor;
+import com.cv4j.core.datamodel.Scalar;
+import com.cv4j.core.pixels.NormRotate;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import com.cv4j.core.datamodel.CV4JImage;
-import com.cv4j.core.datamodel.ImageProcessor;
-import com.cv4j.core.datamodel.Scalar;
-import com.cv4j.core.pixels.NormRotate;
 
 
 public class ClientApp extends JFrame implements ActionListener {
