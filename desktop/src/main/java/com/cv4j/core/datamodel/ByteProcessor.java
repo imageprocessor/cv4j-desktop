@@ -15,12 +15,20 @@
  */
 package com.cv4j.core.datamodel;
 
+import lombok.Getter;
+
 public class ByteProcessor implements ImageProcessor {
 
+    @Getter
     private int width;
+
+    @Getter
     private int height;
+
     private byte[] GRAY;
     private int[] hist;
+
+    @Getter
     private ImageData image;
 
     public ByteProcessor(int width, int height) {
@@ -42,16 +50,6 @@ public class ByteProcessor implements ImageProcessor {
 
     protected void setCallBack(ImageData data) {
         this.image = data;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
     }
 
     @Override
@@ -84,10 +82,6 @@ public class ByteProcessor implements ImageProcessor {
         for (int i=0; i < size; i++)
             pixels[i] = 0xff000000 | ((GRAY[i]&0xff)<<16) | ((GRAY[i]&0xff)<<8) | GRAY[i]&0xff;
         return pixels;
-    }
-    public ImageData getImage() {
-
-        return this.image;
     }
 
     @Override

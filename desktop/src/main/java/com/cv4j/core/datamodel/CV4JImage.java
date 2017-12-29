@@ -25,6 +25,7 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 import com.cv4j.exception.CV4JException;
+import lombok.Getter;
 
 
 public class CV4JImage implements ImageData, Serializable{
@@ -32,6 +33,8 @@ public class CV4JImage implements ImageData, Serializable{
     private static final long serialVersionUID = -8832812623741546452L;
     private int width;
     private int height;
+
+    @Getter
     private ImageProcessor processor;
     private BufferedImage bitmap;
     
@@ -95,10 +98,6 @@ public class CV4JImage implements ImageData, Serializable{
         pixels = null;
     }
 
-    public ImageProcessor getProcessor() {
-        return this.processor;
-    }
-
     @Override
     public CV4JImage convert2Gray() {
         if(processor instanceof ColorProcessor) {
@@ -121,8 +120,6 @@ public class CV4JImage implements ImageData, Serializable{
 
         return this;
     }
-    
-    
 
     @Override
     public BufferedImage toBitmap() {
@@ -153,7 +150,6 @@ public class CV4JImage implements ImageData, Serializable{
     /**
      * 保存图片到指定路径
      * @param bitmap
-     * @param format 支持jpg、png、webp
      * @param path
      */
     public void savePic(BufferedImage bitmap, String path) {

@@ -6,9 +6,6 @@ import java.awt.image.BufferedImage;
 
 public class ImagePanel extends JComponent {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private BufferedImage image;
 	public ImagePanel(){

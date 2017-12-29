@@ -15,11 +15,18 @@
  */
 package com.cv4j.core.datamodel;
 
+import lombok.Getter;
+
 public class FloatProcessor implements ImageProcessor {
 
+    @Getter
     private int width;
+
+    @Getter
     private int height;
     private float[] GRAY;
+
+    @Getter
     private ImageData image;
 
     public FloatProcessor(float[] data, int width, int height) {
@@ -30,16 +37,6 @@ public class FloatProcessor implements ImageProcessor {
 
     protected void setCallBack(ImageData data) {
         this.image = data;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
     }
 
     @Override
@@ -70,11 +67,6 @@ public class FloatProcessor implements ImageProcessor {
 
     public void putGray(float[] gray) {
         System.arraycopy(gray, 0, GRAY, 0, gray.length);
-    }
-
-    public ImageData getImage() {
-
-        return this.image;
     }
 
     @Override

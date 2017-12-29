@@ -16,14 +16,21 @@
 package com.cv4j.core.datamodel;
 
 import com.cv4j.exception.CV4JException;
+import lombok.Getter;
 
 public class ColorProcessor implements ImageProcessor {
+
     private byte[] R;
     private byte[] G;
     private byte[] B;
+
+    @Getter
     private ImageData image;
 
+    @Getter
     private int width;
+
+    @Getter
     private int height;
     
     public ColorProcessor(int width, int height) {
@@ -34,7 +41,6 @@ public class ColorProcessor implements ImageProcessor {
         G = new byte[size];
         B = new byte[size];
     }
-
 
     public ColorProcessor(int[] pixels, int width, int height) {
         this.width = width;
@@ -58,16 +64,6 @@ public class ColorProcessor implements ImageProcessor {
             G[i] = (byte)g;
             B[i] = (byte)b;
         }
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
     }
 
     @Override
