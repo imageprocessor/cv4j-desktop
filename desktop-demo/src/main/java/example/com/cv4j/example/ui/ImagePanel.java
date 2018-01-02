@@ -1,4 +1,4 @@
-package example;
+package example.com.cv4j.example.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +27,9 @@ public class ImagePanel extends JComponent {
 		g2.setPaint(Color.BLACK);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 		if(image != null){
-			g2.drawImage(image, 10, 10, image.getWidth(), image.getHeight(),null);
+			int x = this.getWidth() / 2 - image.getWidth()/2;
+			int y = (this.getHeight() - image.getHeight()) / 2;
+			g2.drawImage(image, x, y, image.getWidth(), image.getHeight(),null);
 		} 
 		g2.setFont(new Font("Serif", Font.BOLD, 12));
 		g2.setPaint(Color.WHITE);

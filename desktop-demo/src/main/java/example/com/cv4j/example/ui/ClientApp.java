@@ -1,4 +1,4 @@
-package example;
+package example.com.cv4j.example.ui;
 
 import com.cv4j.core.datamodel.CV4JImage;
 import com.cv4j.core.datamodel.ImageProcessor;
@@ -14,9 +14,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.*;
+import java.util.List;
+
+import example.com.cv4j.example.controller.DefaultController;
+import example.com.cv4j.example.controller.EventHandler;
+import example.com.cv4j.example.model.EventData;
+import example.com.cv4j.example.model.MenuConstants;
+import example.com.cv4j.example.model.MenuItemsFactory;
 
 
-public class ClientApp extends JFrame implements ActionListener {
+public class ClientApp extends JFrame implements EventHandler {
 
 	/**
 	 * 
@@ -28,53 +36,42 @@ public class ClientApp extends JFrame implements ActionListener {
 	private JButton okBtn;
 	public ClientApp() {
 		imagepanel = new ImagePanel();
-		browseBtn = new JButton("Browse...");
-		okBtn = new JButton("Process");
-		JPanel btnPanel = new JPanel();
-		btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		btnPanel.add(browseBtn);
-		btnPanel.add(okBtn);
 		
 		// layout UI View
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(imagepanel, BorderLayout.CENTER);
-		this.getContentPane().add(btnPanel, BorderLayout.SOUTH);
-		
-		// setup listener
-		browseBtn.addActionListener(this);
-		okBtn.addActionListener(this);
+		this.getContentPane().add(createMenus(), BorderLayout.NORTH);
 		
 		// size
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension d = toolkit.getScreenSize();
 		setSize(d.width-100, d.height - 80);
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		try {
-			if(e.getSource() == browseBtn) {
-				File f = getFilePath();
-				if(f.isDirectory())return;
-				BufferedImage image = ImageIO.read(f);
-				imagepanel.setImage(image);
-			} else if(e.getSource() == okBtn){
-				CV4JImage model = new CV4JImage(imagepanel.getImage());
-				NormRotate rtt = new NormRotate();
-				ImageProcessor processor = rtt.rotate(model.getProcessor(), 45, new Scalar(0, 0, 255));
-				CV4JImage result = new CV4JImage(processor);
-		    	File newImgFile = new File("D:\\kkkkk.jpg");
-		    	FileOutputStream fos = new FileOutputStream(newImgFile);
-		    	BufferedImage temp = result.toBitmap();
-				ImageIO.write(temp, "jpg",fos);
-				fos.close();
-				imagepanel.setImage(temp);
-			}
-		}catch(IOException ioe) {
-			ioe.printStackTrace();
+
+	private JMenuBar createMenus() {
+		// setup listener
+		DefaultController controller = new DefaultController(this);
+		JMenuBar mb = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		List<String> fileMenuItems = MenuItemsFactory.initFileMenuItems();
+		for(String s : fileMenuItems) {
+			JMenuItem item = new JMenuItem(s);
+			item.addActionListener(controller);
+			fileMenu.add(item);
 		}
-		
+		JMenu filterMenu = new JMenu("Filter");
+		List<String> filterMenuItems = MenuItemsFactory.initFilterMenuItems();
+		for(String s : filterMenuItems) {
+			JMenuItem item = new JMenuItem(s);
+			item.addActionListener(controller);
+			filterMenu.add(item);
+		}
+
+		mb.add(fileMenu);
+		mb.add(filterMenu);
+		return mb;
 	}
-	
+
 	public void showUI() {
 		// settings
 		centre(this);
@@ -117,6 +114,31 @@ public class ClientApp extends JFrame implements ActionListener {
 			return file;
 		} else {
 			return null;
+		}
+	}
+
+	@Override
+	public void handleEvent(EventData e) {
+		try {
+			if(e.getFileOpen(MenuConstants.FILE_OPEN)) {
+				File f = getFilePath();
+				if(f.isDirectory())return;
+				BufferedImage image = ImageIO.read(f);
+				imagepanel.setImage(image);
+			} else if(MenuConstants.FastEPFilter.equals(e.getString(MenuConstants.FastEPFilter))){
+				CV4JImage model = new CV4JImage(imagepanel.getImage());
+				NormRotate rtt = new NormRotate();
+				ImageProcessor processor = rtt.rotate(model.getProcessor(), 45, new Scalar(0, 0, 255));
+				CV4JImage result = new CV4JImage(processor);
+				File newImgFile = new File("D:\\kkkkk.jpg");
+				FileOutputStream fos = new FileOutputStream(newImgFile);
+				BufferedImage temp = result.toBitmap();
+				ImageIO.write(temp, "jpg",fos);
+				fos.close();
+				imagepanel.setImage(temp);
+			}
+		}catch(IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 }
