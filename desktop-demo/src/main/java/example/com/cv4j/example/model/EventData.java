@@ -28,22 +28,22 @@ public class EventData {
 
     public boolean getFileOpen(String name) {
         String cmd = (String)data.get(name);
-        return cmd.equals(MenuConstants.FILE_OPEN);
+        return cmd == null ? false: cmd.equals(MenuConstants.FILE_OPEN);
     }
 
     public int getInt(String name) {
         Integer i = (Integer)data.get(name);
-        return i.intValue();
+        return i==null? 0: i.intValue();
     }
 
     public double getDouble(String name) {
         Double i = (Double)data.get(name);
-        return i.doubleValue();
+        return i==null? 0: i.doubleValue();
     }
 
     public float getFloat(String name) {
         Float i = (Float)data.get(name);
-        return i.floatValue();
+        return i==null? 0: i.floatValue();
     }
 
 }
