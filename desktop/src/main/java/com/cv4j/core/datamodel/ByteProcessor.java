@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package com.cv4j.core.datamodel;
+
 public class ByteProcessor implements ImageProcessor {
     private int width;
     private int height;
@@ -108,8 +109,8 @@ public class ByteProcessor implements ImageProcessor {
 
 	@Override
 	public ImageData getImage() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return image;
 	}
 
 }

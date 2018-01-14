@@ -92,8 +92,8 @@ public class FloatProcessor implements ImageProcessor {
 
 	@Override
 	public ImageData getImage() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return image;
 	}
 
 }
