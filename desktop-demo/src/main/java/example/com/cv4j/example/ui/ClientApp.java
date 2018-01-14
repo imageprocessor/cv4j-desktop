@@ -1,21 +1,28 @@
 package example.com.cv4j.example.ui;
 
-import com.cv4j.core.datamodel.CV4JImage;
-import com.cv4j.core.datamodel.ImageProcessor;
-import com.cv4j.core.datamodel.Scalar;
-import com.cv4j.core.pixels.NormRotate;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import com.cv4j.core.datamodel.CV4JImage;
+import com.cv4j.core.datamodel.ImageProcessor;
+import com.cv4j.core.filters.FastEPFilter;
 
 import example.com.cv4j.example.controller.DefaultController;
 import example.com.cv4j.example.controller.EventHandler;
@@ -127,14 +134,13 @@ public class ClientApp extends JFrame implements EventHandler {
 				imagepanel.setImage(image);
 			} else if(MenuConstants.FastEPFilter.equals(e.getString(MenuConstants.FastEPFilter))){
 				CV4JImage model = new CV4JImage(imagepanel.getImage());
-				NormRotate rtt = new NormRotate();
-				ImageProcessor processor = rtt.rotate(model.getProcessor(), 45, new Scalar(0, 0, 255));
+				FastEPFilter epf = new FastEPFilter();
+				ImageProcessor processor = epf.filter(model.getProcessor());
 				CV4JImage result = new CV4JImage(processor);
-				File newImgFile = new File("D:\\kkkkk.jpg");
-				FileOutputStream fos = new FileOutputStream(newImgFile);
+				//FileOutputStream fos = new FileOutputStream(newImgFile);
+				//ImageIO.write(temp, "jpg",fos);
+				//fos.close();
 				BufferedImage temp = result.toBitmap();
-				ImageIO.write(temp, "jpg",fos);
-				fos.close();
 				imagepanel.setImage(temp);
 			}
 		}catch(IOException ioe) {

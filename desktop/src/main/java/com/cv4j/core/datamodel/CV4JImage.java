@@ -25,7 +25,6 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 
 import com.cv4j.exception.CV4JException;
-import lombok.Getter;
 
 
 public class CV4JImage implements ImageData, Serializable{
@@ -33,8 +32,6 @@ public class CV4JImage implements ImageData, Serializable{
     private static final long serialVersionUID = -8832812623741546452L;
     private int width;
     private int height;
-
-    @Getter
     private ImageProcessor processor;
     private BufferedImage bitmap;
     
@@ -200,4 +197,9 @@ public class CV4JImage implements ImageData, Serializable{
         processor = null;
         bitmap = null;
     }
+
+	@Override
+	public ImageProcessor getProcessor() {
+		return this.processor;
+	}
 }

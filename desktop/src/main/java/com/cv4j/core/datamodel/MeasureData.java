@@ -15,16 +15,10 @@
  */
 package com.cv4j.core.datamodel;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-@NoArgsConstructor
-@Setter
-@Getter
 public class MeasureData {
 
     private Point cp; // center x of the contour and center y of the contour
@@ -43,4 +37,38 @@ public class MeasureData {
                 .append("roundness:").append(format.format(roundness));
         return sb.toString();
     }
+
+	public Point getCp() {
+		return cp;
+	}
+
+	public void setCp(Point cp) {
+		this.cp = cp;
+	}
+
+	public double getAngle() {
+		return angle;
+	}
+
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+
+	public double getArea() {
+		return area;
+	}
+
+	public void setArea(double area) {
+		this.area = area;
+	}
+
+	public double getRoundness() {
+		return roundness;
+	}
+
+	public void setRoundness(double roundness) {
+		this.roundness = roundness;
+	}
+    
+    
 }

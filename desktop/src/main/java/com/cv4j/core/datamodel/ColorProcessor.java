@@ -16,7 +16,6 @@
 package com.cv4j.core.datamodel;
 
 import com.cv4j.exception.CV4JException;
-import lombok.Getter;
 
 public class ColorProcessor implements ImageProcessor {
 
@@ -24,13 +23,8 @@ public class ColorProcessor implements ImageProcessor {
     private byte[] G;
     private byte[] B;
 
-    @Getter
     private ImageData image;
-
-    @Getter
     private int width;
-
-    @Getter
     private int height;
     
     public ColorProcessor(int width, int height) {
@@ -185,4 +179,14 @@ public class ColorProcessor implements ImageProcessor {
             throw new CV4JException("invalid argument...");
         }
     }
+
+	@Override
+	public int getWidth() {
+		return width;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
+	}
 }

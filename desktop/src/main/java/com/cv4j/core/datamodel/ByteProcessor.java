@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 package com.cv4j.core.datamodel;
-
-import lombok.Getter;
-
 public class ByteProcessor implements ImageProcessor {
-
-    @Getter
     private int width;
-
-    @Getter
     private int height;
 
     private byte[] GRAY;
     private int[] hist;
-
-    @Getter
     private ImageData image;
 
     public ByteProcessor(int width, int height) {
@@ -104,5 +95,21 @@ public class ByteProcessor implements ImageProcessor {
     public byte[] toByte(int index) {
         return GRAY;
     }
+
+	@Override
+	public int getWidth() {
+		return width;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
+	}
+
+	@Override
+	public ImageData getImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
