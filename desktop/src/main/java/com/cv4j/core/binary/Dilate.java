@@ -57,7 +57,7 @@ public class Dilate {
 			for(int row=0; row<height+(size.rows/2); row++) {
 				y2 = (row + 1)>height ? height : (row + 1);
 				y1 = (row - size.rows) < 0 ? 0 : (row - size.rows);
-				for(int col=0; col<width+(s.cols/2); col++) {
+				for(int col=0; col<width+(size.cols/2); col++) {
 					x2 = (col + 1)>width ? width : (col + 1);
 	                x1 = (col - size.cols) < 0 ? 0 : (col - size.cols);
 	                cx = (col - size.cols/2) < 0 ? 0 : col - size.cols/2;
