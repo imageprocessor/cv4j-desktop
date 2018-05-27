@@ -28,8 +28,8 @@ public class FastEPFilter implements CommonFilter {
 	private int ksize;
 	private float sigma;
 	public FastEPFilter() {
-		sigma = 10.0f; // by default
-		ksize = 15;
+		sigma = 20.0f; // by default
+		ksize = 10;
 	}
 	
 	public void setWinsize(int winSize) {
